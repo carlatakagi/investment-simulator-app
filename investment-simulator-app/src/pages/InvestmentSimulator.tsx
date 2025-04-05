@@ -14,7 +14,7 @@ export default function InvestmentSimulator() {
       <S.LabelContainer>
           <div>
               <div>
-                  <p>Valor inicial:</p>
+                  <p>Valor inicial</p>
                   <S.Input
                   type="number"
                   value={amount}
@@ -25,7 +25,7 @@ export default function InvestmentSimulator() {
 
           <div>
               <div>
-                  <p>Tempo (meses):</p>
+                  <p>Tempo (meses)</p>
                   <S.Input
                   type="number"
                   value={months}
@@ -36,7 +36,7 @@ export default function InvestmentSimulator() {
 
           <div>
               <div>
-                <p>Investimento:</p>
+                <p>Investimento</p>
                   <S.Select value={type} onChange={(e) => setType(e.target.value)}>
                     <option value="CDB">CDB (100% CDI)</option>
                     <option value="Tesouro IPCA">Tesouro IPCA</option>
