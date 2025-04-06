@@ -1,5 +1,14 @@
 import { useState } from 'react';
 import * as S from './styles';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import Select from '../components/Select';
+
+const options = [
+  { value: 'CDB', label: 'CDB (100% CDI)' },
+  { value: 'Tesouro IPCA', label: 'Tesouro IPCA' },
+  { value: 'Poupança', label: 'Poupança' },
+];
 
 export default function InvestmentSimulator() {
   const [amount, setAmount] = useState(1000);
@@ -10,50 +19,34 @@ export default function InvestmentSimulator() {
   return (
     <S.Container>
         <S.Title>Simulador de Investimentos</S.Title>
-
       <S.LabelContainer>
-          <div>
-              <div>
-                  <p>Valor inicial</p>
-                  <S.Input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(Number(e.target.value))}
-                  />
-              </div>
-          </div>
-
-          <div>
-              <div>
-                  <p>Tempo (meses)</p>
-                  <S.Input
-                  type="number"
-                  value={months}
-                  onChange={(e) => setMonths(Number(e.target.value))}
-                  />
-              </div>
-          </div>
-
-          <div>
-              <div>
-                <p>Investimento</p>
-                  <S.Select value={type} onChange={(e) => setType(e.target.value)}>
-                    <option value="CDB">CDB (100% CDI)</option>
-                    <option value="Tesouro IPCA">Tesouro IPCA</option>
-                    <option value="Poupança">Poupança</option>
-                  </S.Select>
-              </div>
-          </div>
+        <Input
+          title='Valor inicial'
+          type='number'
+          value={amount}
+          handleChange={(value: string | number) => setAmount(Number(value))}
+        />
+        <Input
+          title='Tempo em meses'
+          type='number'
+          value={months}
+          handleChange={(value: string | number) => setMonths(Number(value))}
+        />
+        <Select
+          title='Tipo de investimento'
+          ariaLabel='Selecione o tipo de investimento'
+          handleChange={(value: string) => setType(value)}
+          value={type}
+          options={options}
+        />
       </S.LabelContainer>
 
-      <S.Button
-      type='submit'
-      onClick={() => console.log('clicou')}
-      >
-        Simular
-      </S.Button>
-
-
+      <Button
+        title='Simular'
+        type='button'
+        handleClick={() => console.log('Simulando...')}
+        ariaLabel='Clique para simular o investimento'
+      />
     </S.Container>
   );
 }
