@@ -1,3 +1,4 @@
+import { Label } from '@radix-ui/react-label';
 import * as S from './styles';
 
 interface Props {
@@ -12,14 +13,12 @@ export default function Input({
 }: Props) {
   return (
     <div>
-      <div>
-          <p>{title}</p>
-          <S.Input
-            type={type}
-            value={value}
-            onChange={(e) => handleChange(e.target.value)}
-          />
-      </div>
+      <Label>{title}</Label>
+      <S.Input
+        type={type}
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
     </div>
   );
 }

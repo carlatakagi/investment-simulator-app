@@ -1,10 +1,12 @@
+// biome-ignore lint/style/useImportType: <explanation>
+import { InvestmentType } from '../../pages/InvestmentSimulator';
 import * as S from './styles';
 
 interface Props {
   title: string;
   ariaLabel: string;
-  handleChange: (value: string) => void;
-  value: string | number;
+  handleChange: (value: string | InvestmentType | number) => void;
+  value: string | number | InvestmentType;
   options: Array<{ value: string; label: string }>;
 }
 
