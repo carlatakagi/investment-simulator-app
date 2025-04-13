@@ -13,7 +13,7 @@ export default function Input({
 }: Props) {
   return (
     <div>
-      <Label style={{ fontSize: 14 }}>{title}</Label>
+      <Label style={{ fontSize: 12 }}>{title}</Label>
       <S.Input
         type={type}
         value={value}
