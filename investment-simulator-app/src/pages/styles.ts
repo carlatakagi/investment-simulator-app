@@ -18,8 +18,6 @@ export const LoadingMessage = styled.p`
   color: #555;
 `;
 
-
-
 export const LabelContainer = styled.div`
   display: flex;
   align-items: center;
