@@ -28,7 +28,7 @@ export default function InvestmentSimulator() {
   const [cdiFee, setCdiFee] = useState(0);
   const [cdiPercentage, setCdiPercentage] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
-  const [finalAmount, setFinalAmount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState<null | number>(null);
   const isDisabled = amount <= 0 || monthlyAmount < 0 || months <= 0;
 
   const simulateInvestment = (
@@ -78,7 +78,13 @@ export default function InvestmentSimulator() {
   return (
     <S.Container>
       <S.Title>Simulador de Investimentos</S.Title>
-        <Tabs.Root value={activeTab} orientation="horizontal" onValueChange={(value: string) => setActiveTab(value as InvestmentType)}>
+        <Tabs.Root
+          value={activeTab}
+          orientation="horizontal"
+          onValueChange={(value: string) => {
+          setActiveTab(value as InvestmentType);
+          setFinalAmount(null);
+        }}>
           <S.TabsContainer>
               <Tabs.List aria-label="Investment Types">
                 {options.map((option) => (
@@ -143,7 +149,7 @@ export default function InvestmentSimulator() {
                 />
               </S.CardContent>
             )}
-            {finalAmount > 0 && (
+            {finalAmount !== null && (
               <S.ResultText>
                 Valor final: R$ {finalAmount.toFixed(2)}
               </S.ResultText>
