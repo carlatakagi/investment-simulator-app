@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { Tabs } from "radix-ui";
 import Card from '../components/Card';
+import { calculateCDB, calculatePoupanca, calculateTesouroDireto } from '../utils/simulateInvestment';
 
 export type Option = {
   value: string;
@@ -26,22 +27,53 @@ export default function InvestmentSimulator() {
   const [selicFee, setSelicFee] = useState(14.25);
   const [cdiFee, setCdiFee] = useState(0);
   const [cdiPercentage, setCdiPercentage] = useState(100);
+  const [isLoading, setIsLoading] = useState(false);
+  const [finalAmount, setFinalAmount] = useState(0);
+  const isDisabled = amount <= 0 || monthlyAmount < 0 || months <= 0;
 
-  const simulateInvestment = (activeTab: InvestmentType, months: number, amount: number) => {
-    switch (activeTab) {
-      case 'CDB':
-        console.log('Simulando CDB...', activeTab);
-        break;
-      case 'Tesouro Direto':
-        console.log('Simulando Tesouro Direto...', months);
-        break;
-      case 'Poupança':
-        console.log('Simulando Poupança...', amount);
-        break;
-      default:
-        console.log('Tipo de investimento inválido.');
-    }
+  const simulateInvestment = (
+    activeTab: InvestmentType,
+    months: number,
+    amount: number,
+    monthlyAmount: number,
+    cdiFee: number,
+    cdiPercentage: number,
+    selicFee: number,
+  ) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      try {
+        if (activeTab === 'CDB') {
+          const cdbResult = calculateCDB(amount, monthlyAmount, months, cdiFee, cdiPercentage);
+          setFinalAmount(cdbResult.finalAmount);
+          console.log('CDB Result:', cdbResult);
+        }
+        if (activeTab === 'Poupança') {
+          const poupancaResult = calculatePoupanca(amount, monthlyAmount, months);
+          setFinalAmount(poupancaResult.finalAmount);
+          console.log('Poupança Result:', poupancaResult);
+        }
+        if (activeTab === 'Tesouro Direto') {
+          const tesouroResult = calculateTesouroDireto(amount, monthlyAmount, months, selicFee);
+          setFinalAmount(tesouroResult.finalAmount);
+          console.log('Tesouro Direto Result:', tesouroResult);
+        }
+      } catch (error) {
+        console.error('Error simulating investment:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000);
   };
+
+  if (isLoading) {
+    return (
+      <S.Container>
+        <S.Title>Simulador de Investimentos</S.Title>
+        <S.LoadingMessage>Carregando...</S.LoadingMessage>
+      </S.Container>
+    )
+  }
 
   return (
     <S.Container>
@@ -111,12 +143,28 @@ export default function InvestmentSimulator() {
                 />
               </S.CardContent>
             )}
+            {finalAmount > 0 && (
+              <S.ResultText>
+                Valor final: R$ {finalAmount.toFixed(2)}
+              </S.ResultText>
+            )}
           </Card>
 
           <Button
             title='Simular'
             type='button'
-            handleClick={() => simulateInvestment(activeTab, months, amount)}
+            handleClick={() => {
+              simulateInvestment(
+                activeTab,
+                months,
+                amount,
+                monthlyAmount,
+                cdiFee,
+                cdiPercentage,
+                selicFee
+              );
+            }}
+            disabled={isDisabled}
             ariaLabel='Clique para simular o investimento'
           />
         </Tabs.Root>
