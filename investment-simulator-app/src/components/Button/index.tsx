@@ -5,10 +5,11 @@ interface Props {
   type: 'button' | 'submit' | 'reset';
   handleClick: (value: string) => void;
   ariaLabel: string;
+  disabled?: boolean;
 }
 
 export default function Button({
-  title, type, handleClick, ariaLabel
+  title, type, handleClick, ariaLabel, disabled = false,
 }: Props) {
   return (
     <div>
@@ -16,6 +17,7 @@ export default function Button({
         type={type}
         aria-label={ariaLabel}
         onClick={() => handleClick('clicou')}
+        disabled={disabled}
       >
         {title}
       </S.Button>
