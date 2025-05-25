@@ -12,6 +12,14 @@ export const Title = styled.h2`
   margin-bottom: 2rem;
 `;
 
+export const LoadingMessage = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+`;
+
+
+
 export const LabelContainer = styled.div`
   display: flex;
   align-items: center;
@@ -42,4 +50,11 @@ export const CardContent = styled.div`
   gap: 8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+`;
+
+export const ResultText = styled.p`
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
 `;
